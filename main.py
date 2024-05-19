@@ -10,7 +10,6 @@ def rawdata_cloud2local():
     Migrate input raw data from Dropbox 
     to local.
     """
-    import os
     for folder in ['output']:
         local_fs = LocalBackend(f'./data/canon/{folder}/')
         dropbox_fs = NewDropboxBackend(f'/data/canon/{folder}/')
@@ -30,4 +29,5 @@ table_to_graph_transformer = GraphDataPlatform(
 )
 
 if __name__ == '__main__':
-    rawdata_cloud2local()
+    # rawdata_cloud2local()
+    table_to_graph_transformer.execute()
