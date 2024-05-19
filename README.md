@@ -21,7 +21,7 @@ pypi rawdata built by my `pypi_rawdata` etl pipeline and transform the data into
     NOTE: using LocalBackend of batch_framework
     not using DropboxBackend yet.
 - [X] Migrade pypi rawdata from Dropbox to local
-- [ ] Run local table to graph transformation
+- [X] Run local table to graph transformation
 - [ ] Migrade all subgraph, graph data to Dropbox
 - [ ] Make sure the data pipeline works with Dropbox as storage 
 - [ ] Build up github action pipeline

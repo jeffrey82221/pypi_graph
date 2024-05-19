@@ -71,9 +71,9 @@ metagraph = MetaGraph(
         # Requirement Package Node
         'requirement': """
         SELECT
-            DISTINCT ON (requirement)
-            HASH(requirement) AS node_id,
-            requirement AS name
+            DISTINCT ON (required_pkg_name)
+            HASH(required_pkg_name) AS node_id,
+            required_pkg_name AS name,
         FROM latest_requirement
         """,
         # Author Person Node
@@ -151,9 +151,13 @@ metagraph = MetaGraph(
         # Has Requirement Link
         'has_requirement': """
         SELECT
-            DISTINCT ON (pkg_name, requirement)
+            DISTINCT ON (pkg_name, required_pkg_name)
             HASH(pkg_name) AS from_id,
-            HASH(requirement) AS to_id
+            HASH(required_pkg_name) AS to_id,
+            num_match_dist,
+            newest_dist,
+            oldest_dist,
+            requirement_string
         FROM latest_requirement
         """,
         # Has Author Link
