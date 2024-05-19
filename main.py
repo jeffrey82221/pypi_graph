@@ -1,3 +1,4 @@
+import os
 import copy
 from batch_framework.filesystem import LocalBackend
 from plugins.new_dropbox_backend import NewDropboxBackend
@@ -20,6 +21,21 @@ def rawdata_cloud2local():
             local_fs.upload_core(buff, file)
             print('folder:', folder, 'file:', file, 'uploaded')
 
+def graphdata_local2cloud():
+    """
+    Migrade subgrade and graph data from local to 
+    Dropbox
+    """
+    for folder in ['subgraph', 'graph']:
+        local_fs = LocalBackend(f'./data/{folder}/')
+        dropbox_fs = NewDropboxBackend(f'/data/{folder}/')
+        for file in os.listdir(f'./data/{folder}/'):
+            print('folder:', folder, 'file:', file, 'upload started')
+            buff = local_fs.download_core(file)
+            buff.seek(0)
+            dropbox_fs.upload_core(buff, file)
+            print('folder:', folder, 'file:', file, 'uploaded')
+
 table_to_graph_transformer = GraphDataPlatform(
     metagraph=copy.deepcopy(metagraph),
     canon_fs=LocalBackend('data/canon/output/'),
@@ -30,4 +46,5 @@ table_to_graph_transformer = GraphDataPlatform(
 
 if __name__ == '__main__':
     # rawdata_cloud2local()
-    table_to_graph_transformer.execute()
+    # table_to_graph_transformer.execute()
+    graphdata_local2cloud()
