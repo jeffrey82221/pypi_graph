@@ -44,6 +44,7 @@ class GraphDataPlatform(ETLGroup):
         args.append(self._grouper)
         self._input_ids = subgraph_extractor.input_ids
         self._output_ids = self._grouper.output_ids
+        self._rdb = rdb
         super().__init__(*args)
 
     @property

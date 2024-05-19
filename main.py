@@ -36,14 +36,14 @@ def graphdata_local2cloud():
             dropbox_fs.upload_core(buff, file)
             print('folder:', folder, 'file:', file, 'uploaded')
 
-def get_transformer(local: bool=False) -> GraphDataPlatform:
+def get_transformer(local: bool=False, rdb: DuckDBBackend=DuckDBBackend()) -> GraphDataPlatform:
     if local:
         return GraphDataPlatform(
             metagraph=copy.deepcopy(metagraph),
             canon_fs=LocalBackend('data/canon/output/'),
             subgraph_fs=LocalBackend('data/subgraph/'),
             output_fs=LocalBackend('data/graph/'),
-            rdb=DuckDBBackend()
+            rdb=rdb
         )
     else:
         return GraphDataPlatform(
@@ -51,12 +51,15 @@ def get_transformer(local: bool=False) -> GraphDataPlatform:
             canon_fs=NewDropboxBackend('/data/canon/output/'),
             subgraph_fs=NewDropboxBackend('/data/subgraph/'),
             output_fs=NewDropboxBackend('/data/graph/'),
-            rdb=DuckDBBackend()
+            rdb=rdb
         )
 
 
 if __name__ == '__main__':
     # rawdata_cloud2local()
-    # get_transformer(local=True).execute()
+    rdb = DuckDBBackend(LocalBackend('data/duckdb'), 'demo.db')
+    transformer = get_transformer(local=True, rdb=rdb)
+    transformer.execute()
+    rdb.commit()
     # graphdata_local2cloud()
-    get_transformer(local=False).execute()
+    # get_transformer(local=False).execute()
