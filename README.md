@@ -23,9 +23,8 @@ pypi rawdata built by my `pypi_rawdata` etl pipeline and transform the data into
 - [X] Migrade pypi rawdata from Dropbox to local
 - [X] Run local table to graph transformation
 - [X] Migrade all subgraph, graph data to Dropbox
-- [ ] Make sure the data pipeline works with Dropbox as storage 
+- [X] Make sure the data pipeline works with Dropbox as storage 
 - [ ] Build up github action pipeline
-    - [ ] Move neccessary files related to building of workflow ymls
     - [ ] Generate workflow ymls
     - [ ] Push the workflow to github action and make sure it runs succesfully
 
