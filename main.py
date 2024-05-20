@@ -57,9 +57,13 @@ def get_transformer(local: bool=False, rdb: DuckDBBackend=DuckDBBackend()) -> Gr
 
 if __name__ == '__main__':
     # rawdata_cloud2local()
-    rdb = DuckDBBackend(LocalBackend('data/duckdb'), 'demo.db')
+    rdb = DuckDBBackend(LocalBackend('data/duckdb'), db_name='demo.db')
     transformer = get_transformer(local=True, rdb=rdb)
     transformer.execute()
+    df = rdb._conn.execute('show all tables;').fetchdf()
+    cols = df.columns
+    print(cols)
+    print(df[['name', 'column_names']])
     rdb.commit()
     # graphdata_local2cloud()
     # get_transformer(local=False).execute()

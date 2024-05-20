@@ -1,11 +1,34 @@
 from batch_framework.filesystem import FileSystem
 from batch_framework.storage import PandasStorage
-from batch_framework.etl import ETLGroup
+from batch_framework.etl import ETLGroup, SQLExecutor
 from batch_framework.rdb import RDB
 from .groupers import NodeGrouper, LinkGrouper
 from .meta import GroupingMeta
 from .validate import Validator
 
+
+class Ingestor(SQLExecutor):
+    def __init__(self, metagraph: GroupingMeta, rdb: RDB,
+                 input_fs: FileSystem):
+        self.metagraph = metagraph
+        super().__init__(rdb, input_fs=input_fs)
+
+    @property
+    def input_ids(self):
+        results = []
+        results.extend(self.metagraph.output_nodes)
+        results.extend(self.metagraph.output_links)
+        return results
+
+    @property
+    def output_ids(self):
+        return [id.replace('_final', '') for id in self.input_ids]
+    
+    def sqls(self, **kwargs):
+        results = dict()
+        for in_id, out_id in zip(self.input_ids, self.output_ids):
+            results[out_id] = f'SELECT * FROM {in_id}'
+        return results
 
 class GraphGrouper(ETLGroup):
     def __init__(self, meta: GroupingMeta, rdb: RDB, input_fs: FileSystem,
@@ -26,7 +49,12 @@ class GraphGrouper(ETLGroup):
         self._inputs = node_grouper.input_ids + link_grouper.input_ids
         self._outputs = node_grouper.output_ids + link_grouper.output_ids
         validator = Validator(self._meta, PandasStorage(output_fs))
-        args = [node_grouper, link_grouper, validator]
+        ingestor = Ingestor(
+            self._meta,
+            rdb,
+            input_fs=output_fs
+        )
+        args = [node_grouper, link_grouper, validator, ingestor]
         super().__init__(*args)
 
     @property
