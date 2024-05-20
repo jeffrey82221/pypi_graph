@@ -57,6 +57,10 @@ def get_transformer(local: bool=False, rdb: DuckDBBackend=DuckDBBackend()) -> Gr
 
 if __name__ == '__main__':
     # rawdata_cloud2local()
+    if os.path.exists('data/duckdb/demo.db'):
+        os.remove('data/duckdb/demo.db')
+    if os.path.exists('duckdb/demo.db'):
+        os.remove('duckdb/demo.db')
     rdb = DuckDBBackend(LocalBackend('data/duckdb'), db_name='demo.db')
     transformer = get_transformer(local=True, rdb=rdb)
     transformer.execute()
