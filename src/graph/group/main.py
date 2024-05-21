@@ -1,3 +1,4 @@
+from typing import List
 from batch_framework.filesystem import FileSystem
 from batch_framework.storage import PandasStorage
 from batch_framework.etl import ETLGroup, SQLExecutor
@@ -8,17 +9,14 @@ from .validate import Validator
 
 
 class Ingestor(SQLExecutor):
-    def __init__(self, metagraph: GroupingMeta, rdb: RDB,
+    def __init__(self, target_ids: List[str], rdb: RDB,
                  input_fs: FileSystem):
-        self.metagraph = metagraph
+        self._target_ids = target_ids
         super().__init__(rdb, input_fs=input_fs)
 
     @property
     def input_ids(self):
-        results = []
-        results.extend(self.metagraph.output_nodes)
-        results.extend(self.metagraph.output_links)
-        return results
+        return self._target_ids
 
     @property
     def output_ids(self):
@@ -50,7 +48,7 @@ class GraphGrouper(ETLGroup):
         self._outputs = node_grouper.output_ids + link_grouper.output_ids
         validator = Validator(self._meta, PandasStorage(output_fs))
         ingestor = Ingestor(
-            self._meta,
+            self._outputs,
             rdb,
             input_fs=output_fs
         )
