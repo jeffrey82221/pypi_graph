@@ -5,7 +5,6 @@ from batch_framework.etl import ObjProcessor
 from batch_framework.storage import PandasStorage
 
 
-
 class LinkIDValidator(ObjProcessor):
     """
     Check whether link source/target IDs are subset
@@ -45,11 +44,12 @@ class LinkIDValidator(ObjProcessor):
 
 
 class FromLinkIDValidator(LinkIDValidator):
-    def __init__(self, link: str, node: str, 
+    def __init__(self, link: str, node: str,
                  input_storage: PandasStorage):
         super().__init__(link, node, 'from_id', input_storage)
 
+
 class ToLinkIDValidator(LinkIDValidator):
-    def __init__(self, link: str, node: str, 
+    def __init__(self, link: str, node: str,
                  input_storage: PandasStorage):
         super().__init__(link, node, 'to_id', input_storage)

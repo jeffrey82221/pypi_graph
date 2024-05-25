@@ -13,12 +13,12 @@ from batch_framework.filesystem import DropboxBackend
 __all__ = ['NewDropboxBackend']
 
 
-
 class Pipe:
     """
-    FIFO pipe for connecting a writing thread with 
+    FIFO pipe for connecting a writing thread with
     a reading thread
     """
+
     def __init__(self, max_size=8, wait_duration=0.01):
         self._max_size = max_size
         self._current_size = 0
@@ -34,7 +34,7 @@ class Pipe:
             time.sleep(self._wait_duration)
         self._array.append(input_element)
         self._current_size += 1
-    
+
     def generate_output(self) -> Iterator:
         while self._current_size == 0:
             time.sleep(self._wait_duration)
@@ -44,7 +44,7 @@ class Pipe:
             self._current_size -= 1
             while self._on and self._current_size == 0:
                 time.sleep(self._wait_duration)
-    
+
     def load_input(self, input_pipe: Iterator):
         assert self._total_size is not None
         for element in input_pipe:
@@ -60,7 +60,7 @@ class Pipe:
         result = self._array[idx]
         self._current_size -= 1
         return result
-    
+
     def set_total_size(self, count: int):
         self._total_size = count
 
@@ -71,6 +71,7 @@ class Pipe:
 
     def close(self):
         self._on = False
+
 
 class NewDropboxBackend(DropboxBackend):
     def upload_core(self, file_obj: io.BytesIO, remote_path: str):
@@ -84,7 +85,7 @@ class NewDropboxBackend(DropboxBackend):
         self._check_upload_success(file_obj, remote_path)
         file_obj.flush()
         file_obj.close()
-    
+
     def _check_upload_success(self, file_obj: io.BytesIO, remote_path: str):
         download_data = self.download_core(remote_path)
         download_data.seek(0)
@@ -93,7 +94,8 @@ class NewDropboxBackend(DropboxBackend):
         download_data.flush()
         download_data.close()
 
-    def _upload_core(self, file_obj: io.BytesIO, remote_path: str, max_workers = 8, chunk_size = 1000000):
+    def _upload_core(self, file_obj: io.BytesIO,
+                     remote_path: str, max_workers=8, chunk_size=1000000):
         """Upload file object to local storage
 
         Args:
@@ -111,10 +113,10 @@ class NewDropboxBackend(DropboxBackend):
         assert self._fs.exists(file_name), f'{file_name} folder make failed'
         dfs = DirFileSystem(f'/{file_name}', self._fs)
         pipe = Pipe(max_workers)
-        thread = Thread(target = self._upload_all, 
-                        args = (dfs, ext, pipe, max_workers, chunk_cnt, remote_path))
+        thread = Thread(target=self._upload_all,
+                        args=(dfs, ext, pipe, max_workers, chunk_cnt, remote_path))
         thread.start()
-        
+
         def gen(pipe):
             while True:
                 buff = io.BytesIO()
@@ -124,20 +126,24 @@ class NewDropboxBackend(DropboxBackend):
             sfw.write(file_obj.getbuffer())
         pipe.close()
         thread.join()
-    
+
     def _upload_all(self, dfs, ext, pipe, max_workers, chunk_cnt, remote_path):
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             input_pipe = enumerate(pipe.generate_output())
             output_pipe = executor.map(
-                lambda x: self._upload_chunk(dfs, ext, x[0], x[1]), 
+                lambda x: self._upload_chunk(dfs, ext, x[0], x[1]),
                 input_pipe)
-            output = list(tqdm.tqdm(output_pipe, total=chunk_cnt, desc=f'Upload {remote_path}'))
+            output = list(
+                tqdm.tqdm(
+                    output_pipe,
+                    total=chunk_cnt,
+                    desc=f'Upload {remote_path}'))
         total_size = len(output)
         print('number of chunks:', total_size)
         with dfs.open('total.txt', 'w') as f:
             f.write(str(total_size))
         print(f'Done upload {total_size} files')
-        
+
     def _upload_chunk(self, dfs, ext, index, chunk):
         chunk.seek(0)
         with dfs.open(f'{index}.{ext}', 'w') as f:
@@ -169,7 +175,7 @@ class NewDropboxBackend(DropboxBackend):
         print(f'Start download {total_size} files')
         thread = Thread(
             target=self._download_all,
-            args = (dfs, ext, pipe, max_workers, total_size, remote_path)
+            args=(dfs, ext, pipe, max_workers, total_size, remote_path)
         )
         thread.start()
         with SplitFileReader(pipe) as sfw:
@@ -178,8 +184,9 @@ class NewDropboxBackend(DropboxBackend):
         print(f'Done download {total_size} files')
         result.seek(0)
         return result
-    
-    def _download_all(self, dfs, ext, pipe, max_workers, chunk_cnt, remote_path):
+
+    def _download_all(self, dfs, ext, pipe, max_workers,
+                      chunk_cnt, remote_path):
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             input_pipe = range(chunk_cnt)
             input_pipe = map(lambda index: (dfs, index, ext), input_pipe)
@@ -190,7 +197,7 @@ class NewDropboxBackend(DropboxBackend):
                 total=chunk_cnt
             )
             pipe.load_input(chunks)
-    
+
     def _download_chunk(self, x):
         dfs, index, ext = x
         with dfs.open(f'{index}.{ext}', 'r') as f:

@@ -31,9 +31,9 @@ class Validator(ETLGroup):
         results = []
         for link, (src_node, dest_node) in self.metagraph.triplets.items():
             results.append(FromLinkIDValidator(f'link_{link}_final',
-                                           f'node_{src_node}_final',
-                                           self._storage))
+                                               f'node_{src_node}_final',
+                                               self._storage))
             results.append(ToLinkIDValidator(f'link_{link}_final',
-                                           f'node_{dest_node}_final',
-                                           self._storage))
+                                             f'node_{dest_node}_final',
+                                             self._storage))
         return results

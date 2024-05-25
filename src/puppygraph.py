@@ -2,22 +2,14 @@ import duckdb
 from typing import Dict
 from .meta import MetaGraph
 type_mapping = {
-        'VARCHAR': 'String',
-        'INTEGER': 'Int',
-        'UBIGINT': 'Int',
-        'BIGINT': 'Int',
-        'NUMERIC': 'Double'
-    }
-"""
-{"Status":"Error","Message":
-"Please fix 3 schema problems:\nerror: 
-can not convert the type of the 'num_releases' 
-attribute of the 'package' vertex from 'BIGINT' to 'Int'\n
-error: meta field 'link_id' not found in table 'link_has_url'\n
-error: can not convert the type of the 'num_match_dist' attribute of 
-the 'has_requirement' edge 
-from 'BIGINT' to 'Int'\n"}% 
-"""
+    'VARCHAR': 'String',
+    'INTEGER': 'Int',
+    'UBIGINT': 'Int',
+    'BIGINT': 'Int',
+    'NUMERIC': 'Double'
+}
+
+
 def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
     """
     Generate schema.json of puppy graph
@@ -29,17 +21,18 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
     print(db_tables[['column_names', 'column_types']])
     nodes = list(metagraph.node_grouping.keys())
     links = list(metagraph.triplets.keys())
-    assert len(db_tables) == len(nodes + links), 'duck db schema does not match with metagraph'
+    assert len(db_tables) == len(
+        nodes + links), 'duck db schema does not match with metagraph'
     schema = dict()
     schema['catalogs'] = [
-      {
-        "name": "duckdb_data",
-        "type": "duckdb",
-        "jdbc": {
-          "jdbcUri": "jdbc:duckdb:/home/share/demo.db",
-          "driverClass": "org.duckdb.DuckDBDriver"
+        {
+            "name": "duckdb_data",
+            "type": "duckdb",
+            "jdbc": {
+                "jdbcUri": "jdbc:duckdb:/home/share/demo.db",
+                "driverClass": "org.duckdb.DuckDBDriver"
+            }
         }
-      }
     ]
     vertices = []
     for node in nodes:

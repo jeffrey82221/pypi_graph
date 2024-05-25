@@ -18,7 +18,7 @@ class GraphDataPlatform(ETLGroup):
     """
 
     def __init__(self, metagraph: MetaGraph,
-                 canon_fs: FileSystem, 
+                 canon_fs: FileSystem,
                  subgraph_fs: FileSystem,
                  output_fs: FileSystem,
                  rdb: RDB = DuckDBBackend()

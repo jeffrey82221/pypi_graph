@@ -21,12 +21,13 @@ class Ingestor(SQLExecutor):
     @property
     def output_ids(self):
         return [id.replace('_final', '') for id in self.input_ids]
-    
+
     def sqls(self, **kwargs):
         results = dict()
         for in_id, out_id in zip(self.input_ids, self.output_ids):
             results[out_id] = f'SELECT * FROM {in_id}'
         return results
+
 
 class GraphGrouper(ETLGroup):
     def __init__(self, meta: GroupingMeta, rdb: RDB, input_fs: FileSystem,
