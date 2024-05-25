@@ -71,5 +71,6 @@ if __name__ == '__main__':
         'data/duckdb/demo.db',
         metagraph=metagraph
     )
-    print(schema)
+    import json
+    json.dump(schema, open('schema.json', 'w'))
     

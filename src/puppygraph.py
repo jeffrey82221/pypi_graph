@@ -38,7 +38,8 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
         attributes = [{
             'type': type_mapping[t],
             'name': n
-        } for n, t in zip(column_names, column_types) if n not in ['node_id', 'from_id', 'to_id', 'link_id']]
+        } for n, t in zip(column_names, column_types) if n not in [
+            'node_id', 'from_id', 'to_id']]
         vertices.append(
             {
                 'label': node,
@@ -63,7 +64,7 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
         attributes = [{
             'type': type_mapping[t],
             'name': n
-        } for n, t in zip(column_names, column_types) if n not in ['node_id', 'from_id', 'to_id']]
+        } for n, t in zip(column_names, column_types) if n not in ['link_id', 'from_id', 'to_id']]
         edges.append(
             {
                 'label': link,
