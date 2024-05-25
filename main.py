@@ -64,7 +64,7 @@ if __name__ == '__main__':
     if os.path.exists('duckdb/demo.db'):
         os.remove('duckdb/demo.db')
     rdb = DuckDBBackend(LocalBackend('data/duckdb'), db_name='demo.db')
-    transformer = get_transformer(local=False, rdb=rdb)
+    transformer = get_transformer(local=True, rdb=rdb)
     transformer.execute()
     rdb.commit()
     schema = convert_duckdb_to_schema(

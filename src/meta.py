@@ -58,7 +58,7 @@ metagraph = MetaGraph(
         'package': """
         SELECT
             DISTINCT ON (pkg_name)
-            HASH(pkg_name) AS node_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS node_id,
             name,
             package_url,
             project_url,
@@ -72,7 +72,7 @@ metagraph = MetaGraph(
         'requirement': """
         SELECT
             DISTINCT ON (required_pkg_name)
-            HASH(required_pkg_name) AS node_id,
+            CAST(HASH(required_pkg_name) AS VARCHAR) AS node_id,
             required_pkg_name AS name,
         FROM latest_requirement
         """,
@@ -80,7 +80,7 @@ metagraph = MetaGraph(
         'author': """
         SELECT
             DISTINCT ON (author, author_email)
-            HASH(CONCAT(author, '|', author_email)) AS node_id,
+            CAST(HASH(CONCAT(author, '|', author_email)) AS VARCHAR) AS node_id,
             author AS name,
             author_email AS email
         FROM latest_package
@@ -91,7 +91,7 @@ metagraph = MetaGraph(
         'maintainer': """
         SELECT
             DISTINCT ON (maintainer, maintainer_email)
-            HASH(CONCAT(maintainer, '|', maintainer_email)) AS node_id,
+            CAST(HASH(CONCAT(maintainer, '|', maintainer_email)) AS VARCHAR) AS node_id,
             maintainer AS name,
             maintainer_email AS email
         FROM latest_package
@@ -109,7 +109,7 @@ metagraph = MetaGraph(
         )
         SELECT
             DISTINCT ON (license)
-            HASH(license) AS node_id,
+            CAST(HASH(license) AS VARCHAR) AS node_id,
             license AS name
         FROM count_table
         WHERE license IS NOT NULL
@@ -122,7 +122,7 @@ metagraph = MetaGraph(
         'docs_url': """
         SELECT
             DISTINCT ON (docs_url)
-            HASH(docs_url) AS node_id,
+            CAST(HASH(docs_url) AS VARCHAR) AS node_id,
             docs_url AS url
         FROM latest_package
         WHERE docs_url IS NOT NULL
@@ -131,7 +131,7 @@ metagraph = MetaGraph(
         'home_page': """
         SELECT
             DISTINCT ON (home_page)
-            HASH(home_page) AS node_id,
+            CAST(HASH(home_page) AS VARCHAR) AS node_id,
             home_page AS url
         FROM latest_package
         WHERE home_page IS NOT NULL
@@ -140,7 +140,7 @@ metagraph = MetaGraph(
         'project_url': """
         SELECT
             DISTINCT ON (url)
-            HASH(url) AS node_id,
+            CAST(HASH(url) AS VARCHAR) AS node_id,
             url
         FROM latest_url
         WHERE url IS NOT NULL
@@ -152,8 +152,9 @@ metagraph = MetaGraph(
         'has_requirement': """
         SELECT
             DISTINCT ON (pkg_name, required_pkg_name)
-            HASH(pkg_name) AS from_id,
-            HASH(required_pkg_name) AS to_id,
+            CAST(HASH(CONCAT(pkg_name,'|',required_pkg_name)) AS VARCHAR) AS link_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+            CAST(HASH(required_pkg_name) AS VARCHAR) AS to_id,
             num_match_dist,
             newest_dist,
             oldest_dist,
@@ -164,8 +165,9 @@ metagraph = MetaGraph(
         'has_author': """
         SELECT
             DISTINCT ON (author, author_email, pkg_name)
-            HASH(pkg_name) AS from_id,
-            HASH(CONCAT(author, '|', author_email)) AS to_id
+            CAST(HASH(CONCAT(pkg_name,'|',CONCAT(author, '|', author_email))) AS VARCHAR) AS link_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+            CAST(HASH(CONCAT(author, '|', author_email)) AS VARCHAR) AS to_id
         FROM latest_package
         WHERE author IS NOT NULL AND author_email IS NOT NULL
         AND author_email <> ''
@@ -174,8 +176,9 @@ metagraph = MetaGraph(
         'has_maintainer': """
         SELECT
             DISTINCT ON (maintainer, maintainer_email, pkg_name)
-            HASH(pkg_name) AS from_id,
-            HASH(CONCAT(maintainer, '|', maintainer_email)) AS to_id
+            CAST(HASH(CONCAT(pkg_name,'|',CONCAT(maintainer, '|', maintainer_email))) AS VARCHAR) AS link_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+            CAST(HASH(CONCAT(maintainer, '|', maintainer_email)) AS VARCHAR) AS to_id
         FROM latest_package
         WHERE maintainer IS NOT NULL AND maintainer_email IS NOT NULL
         AND maintainer_email <> ''
@@ -193,7 +196,7 @@ metagraph = MetaGraph(
             node_table AS (
                 SELECT
                     DISTINCT ON (license)
-                    HASH(license) AS node_id
+                    CAST(HASH(license) AS VARCHAR) AS node_id
                 FROM count_table
                 WHERE license IS NOT NULL
                     AND license <> 'UNKNOWN'
@@ -204,11 +207,13 @@ metagraph = MetaGraph(
             link_table AS (
                 SELECT
                     DISTINCT ON (license, pkg_name)
-                    HASH(pkg_name) AS from_id,
-                    HASH(license) AS to_id,
+                    CAST(HASH(CONCAT(pkg_name,'|',license)) AS VARCHAR) AS link_id,
+                    CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+                    CAST(HASH(license) AS VARCHAR) AS to_id,
                 FROM latest_package
             )
         SELECT
+            link_id,
             from_id,
             to_id
         FROM link_table
@@ -221,8 +226,9 @@ metagraph = MetaGraph(
         'has_docs_url': """
         SELECT
             DISTINCT ON (docs_url, pkg_name)
-            HASH(pkg_name) AS from_id,
-            HASH(docs_url) AS to_id,
+            CAST(HASH(CONCAT(pkg_name,'|',docs_url)) AS VARCHAR) AS link_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+            CAST(HASH(docs_url) AS VARCHAR) AS to_id,
             'Documentation' AS url_type
         FROM latest_package
         WHERE docs_url IS NOT NULL
@@ -231,8 +237,9 @@ metagraph = MetaGraph(
         'has_home_page': """
         SELECT
             DISTINCT ON (home_page, pkg_name)
-            HASH(pkg_name) AS from_id,
-            HASH(home_page) AS to_id,
+            CAST(HASH(CONCAT(pkg_name,'|',home_page)) AS VARCHAR) AS link_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+            CAST(HASH(home_page) AS VARCHAR) AS to_id,
             'Homepage' AS url_type
         FROM latest_package
         WHERE home_page IS NOT NULL
@@ -241,8 +248,9 @@ metagraph = MetaGraph(
         'has_project_url': """
         SELECT
             DISTINCT ON (url, pkg_name)
-            HASH(pkg_name) AS from_id,
-            HASH(url) AS to_id,
+            CAST(HASH(CONCAT(pkg_name,'|',url)) AS VARCHAR) AS link_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+            CAST(HASH(url) AS VARCHAR) AS to_id,
             url_type
         FROM latest_url
         WHERE url IS NOT NULL

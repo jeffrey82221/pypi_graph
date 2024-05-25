@@ -16,6 +16,7 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
     conn = duckdb.connect(duckdb_path)
     db_tables = conn.execute('SHOW ALL TABLES;').fetchdf()
     db_tables.set_index('name', inplace=True)
+    print(db_tables[['column_names', 'column_types']])
     nodes = list(metagraph.node_grouping.keys())
     links = list(metagraph.triplets.keys())
     assert len(db_tables) == len(nodes + links), 'duck db schema does not match with metagraph'
@@ -37,7 +38,7 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
         attributes = [{
             'type': type_mapping[t],
             'name': n
-        } for n, t in zip(column_names, column_types) if n not in ['node_id', 'from_id', 'to_id']]
+        } for n, t in zip(column_names, column_types) if n not in ['node_id', 'from_id', 'to_id', 'link_id']]
         vertices.append(
             {
                 'label': node,
@@ -71,6 +72,7 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
                     'schema': 'main',
                     'table': f'link_{link}',
                     'metaFields': {
+                        "id": 'link_id',
                         "from": 'from_id',
                         "to": 'to_id'
                     }
