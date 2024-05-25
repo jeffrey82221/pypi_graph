@@ -3,11 +3,21 @@ from typing import Dict
 from .meta import MetaGraph
 type_mapping = {
         'VARCHAR': 'String',
-        'INT': 'Int',
+        'INTEGER': 'Int',
         'UBIGINT': 'Int',
         'BIGINT': 'Int',
         'NUMERIC': 'Double'
     }
+"""
+{"Status":"Error","Message":
+"Please fix 3 schema problems:\nerror: 
+can not convert the type of the 'num_releases' 
+attribute of the 'package' vertex from 'BIGINT' to 'Int'\n
+error: meta field 'link_id' not found in table 'link_has_url'\n
+error: can not convert the type of the 'num_match_dist' attribute of 
+the 'has_requirement' edge 
+from 'BIGINT' to 'Int'\n"}% 
+"""
 def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
     """
     Generate schema.json of puppy graph

@@ -43,6 +43,7 @@ metagraph = MetaGraph(
     },
     link_grouping_sqls={
         'has_url': """
+            t1.link_id,
             t0.from_id,
             t0.to_id,
             COALESCE(t1.url_type, t2.url_type, t3.url_type) AS url_type
@@ -65,7 +66,7 @@ metagraph = MetaGraph(
             requires_python,
             version,
             keywords,
-            num_releases
+            CAST(num_releases AS INT) AS num_releases
         FROM latest_package
         """,
         # Requirement Package Node
@@ -155,7 +156,7 @@ metagraph = MetaGraph(
             CAST(HASH(CONCAT(pkg_name,'|',required_pkg_name)) AS VARCHAR) AS link_id,
             CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
             CAST(HASH(required_pkg_name) AS VARCHAR) AS to_id,
-            num_match_dist,
+            CAST(num_match_dist AS INT) AS num_match_dist,
             newest_dist,
             oldest_dist,
             requirement_string
