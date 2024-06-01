@@ -2,7 +2,7 @@ import os
 import copy
 from batch_framework.filesystem import LocalBackend, DropboxBackend
 from batch_framework.rdb import DuckDBBackend
-from src.graph import GraphDataPlatform
+from src.main import WholeGraphDataPlatform
 from src.meta import metagraph
 from src.puppygraph import convert_duckdb_to_schema
 
@@ -41,18 +41,20 @@ def graphdata_local2cloud():
 
 
 def get_transformer(local: bool = False,
-                    rdb: DuckDBBackend = DuckDBBackend()) -> GraphDataPlatform:
+                    rdb: DuckDBBackend = DuckDBBackend()) -> WholeGraphDataPlatform:
     if local:
-        return GraphDataPlatform(
+        return WholeGraphDataPlatform(
             metagraph=copy.deepcopy(metagraph),
+            raw_fs=LocalBackend('data/canon/raw/'),
             canon_fs=LocalBackend('data/canon/output/'),
             subgraph_fs=LocalBackend('data/subgraph/'),
             output_fs=LocalBackend('data/graph/'),
             rdb=rdb
         )
     else:
-        return GraphDataPlatform(
+        return WholeGraphDataPlatform(
             metagraph=copy.deepcopy(metagraph),
+            raw_fs=DropboxBackend('/data/canon/output/'),
             canon_fs=DropboxBackend('/data/canon/output/'),
             subgraph_fs=LocalBackend('data/subgraph/'),
             output_fs=LocalBackend('data/graph/'),

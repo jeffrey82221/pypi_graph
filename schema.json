@@ -122,6 +122,54 @@
             ]
         },
         {
+            "label": "has_author",
+            "mappedTableSource": {
+                "catalog": "duckdb_data",
+                "schema": "main",
+                "table": "link_has_author",
+                "metaFields": {
+                    "id": "link_id",
+                    "from": "from_id",
+                    "to": "to_id"
+                }
+            },
+            "from": "package",
+            "to": "person",
+            "attributes": []
+        },
+        {
+            "label": "has_maintainer",
+            "mappedTableSource": {
+                "catalog": "duckdb_data",
+                "schema": "main",
+                "table": "link_has_maintainer",
+                "metaFields": {
+                    "id": "link_id",
+                    "from": "from_id",
+                    "to": "to_id"
+                }
+            },
+            "from": "package",
+            "to": "person",
+            "attributes": []
+        },
+        {
+            "label": "has_license",
+            "mappedTableSource": {
+                "catalog": "duckdb_data",
+                "schema": "main",
+                "table": "link_has_license",
+                "metaFields": {
+                    "id": "link_id",
+                    "from": "from_id",
+                    "to": "to_id"
+                }
+            },
+            "from": "package",
+            "to": "license",
+            "attributes": []
+        },
+        {
             "label": "has_requirement",
             "mappedTableSource": {
                 "catalog": "duckdb_data",
@@ -153,54 +201,6 @@
                     "name": "requirement_string"
                 }
             ]
-        },
-        {
-            "label": "has_license",
-            "mappedTableSource": {
-                "catalog": "duckdb_data",
-                "schema": "main",
-                "table": "link_has_license",
-                "metaFields": {
-                    "id": "link_id",
-                    "from": "from_id",
-                    "to": "to_id"
-                }
-            },
-            "from": "package",
-            "to": "license",
-            "attributes": []
-        },
-        {
-            "label": "has_maintainer",
-            "mappedTableSource": {
-                "catalog": "duckdb_data",
-                "schema": "main",
-                "table": "link_has_maintainer",
-                "metaFields": {
-                    "id": "link_id",
-                    "from": "from_id",
-                    "to": "to_id"
-                }
-            },
-            "from": "package",
-            "to": "person",
-            "attributes": []
-        },
-        {
-            "label": "has_author",
-            "mappedTableSource": {
-                "catalog": "duckdb_data",
-                "schema": "main",
-                "table": "link_has_author",
-                "metaFields": {
-                    "id": "link_id",
-                    "from": "from_id",
-                    "to": "to_id"
-                }
-            },
-            "from": "package",
-            "to": "person",
-            "attributes": []
         }
     ]
 }
