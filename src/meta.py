@@ -96,24 +96,38 @@ metagraph = MetaGraph(
         # Author Person Node
         'author': """
         SELECT
-            DISTINCT ON (author, author_email)
-            CAST(HASH(CONCAT(author, '|', author_email)) AS VARCHAR) AS node_id,
-            author AS name,
-            author_email AS email
-        FROM latest_package
-        WHERE author IS NOT NULL AND author_email IS NOT NULL
-        AND author_email <> ''
+            DISTINCT ON (person_name, email_record)
+            CAST(HASH(CONCAT(person_name, '|', email_record)) AS VARCHAR) AS node_id,
+            person_name AS name,
+            email_record AS email
+        FROM latest_email
+        WHERE 
+        (
+            NOT (
+                (person_name IS NULL OR person_name = '') 
+            AND 
+                (email_record IS NULL OR email_record = '')
+            )
+        )
+        AND role = 'author'
         """,
         # Maintainer Person Node
         'maintainer': """
         SELECT
-            DISTINCT ON (maintainer, maintainer_email)
-            CAST(HASH(CONCAT(maintainer, '|', maintainer_email)) AS VARCHAR) AS node_id,
-            maintainer AS name,
-            maintainer_email AS email
-        FROM latest_package
-        WHERE maintainer IS NOT NULL AND maintainer_email IS NOT NULL
-        AND maintainer_email <> ''
+            DISTINCT ON (person_name, email_record)
+            CAST(HASH(CONCAT(person_name, '|', email_record)) AS VARCHAR) AS node_id,
+            person_name AS name,
+            email_record AS email
+        FROM latest_email
+        WHERE 
+        (
+            NOT (
+                (person_name IS NULL OR person_name = '') 
+            AND 
+                (email_record IS NULL OR email_record = '')
+            )
+        )
+        AND role = 'maintainer'
         """,
         # License Node
         'license': """
@@ -227,24 +241,38 @@ metagraph = MetaGraph(
         # Has Author Link
         'has_author': """
         SELECT
-            DISTINCT ON (author, author_email, pkg_name)
-            CAST(HASH(CONCAT(pkg_name,'|',CONCAT(author, '|', author_email))) AS VARCHAR) AS link_id,
+            DISTINCT ON (pkg_name, person_name, email_record)
+            CAST(HASH(CONCAT(pkg_name,'|',CONCAT(person_name, '|', email_record))) AS VARCHAR) AS link_id,
             CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
-            CAST(HASH(CONCAT(author, '|', author_email)) AS VARCHAR) AS to_id
-        FROM latest_package
-        WHERE author IS NOT NULL AND author_email IS NOT NULL
-        AND author_email <> ''
+            CAST(HASH(CONCAT(person_name, '|', email_record)) AS VARCHAR) AS to_id
+        FROM latest_email
+        WHERE 
+        (
+            NOT (
+                (person_name IS NULL OR person_name = '') 
+            AND 
+                (email_record IS NULL OR email_record = '')
+            )
+        )
+        AND role = 'author'
         """,
         # Has Maintainer Link
         'has_maintainer': """
         SELECT
-            DISTINCT ON (maintainer, maintainer_email, pkg_name)
-            CAST(HASH(CONCAT(pkg_name,'|',CONCAT(maintainer, '|', maintainer_email))) AS VARCHAR) AS link_id,
+            DISTINCT ON (pkg_name, person_name, email_record)
+            CAST(HASH(CONCAT(pkg_name,'|',CONCAT(person_name, '|', email_record))) AS VARCHAR) AS link_id,
             CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
-            CAST(HASH(CONCAT(maintainer, '|', maintainer_email)) AS VARCHAR) AS to_id
-        FROM latest_package
-        WHERE maintainer IS NOT NULL AND maintainer_email IS NOT NULL
-        AND maintainer_email <> ''
+            CAST(HASH(CONCAT(person_name, '|', email_record)) AS VARCHAR) AS to_id
+        FROM latest_email
+        WHERE
+        (
+            NOT (
+                (person_name IS NULL OR person_name = '') 
+            AND 
+                (email_record IS NULL OR email_record = '')
+            )
+        )
+        AND role = 'maintainer'
         """,
         # Has Email Link
         'author_has_email': """
@@ -254,8 +282,14 @@ metagraph = MetaGraph(
             CAST(HASH(CONCAT(person_name, '|', email_record)) AS VARCHAR) AS from_id,
             CAST(HASH(email) AS VARCHAR) AS to_id
         FROM latest_email
-        WHERE person_name IS NOT NULL AND email_record IS NOT NULL AND email IS NOT NULL
-        AND email_record <> ''
+        WHERE (
+            NOT (
+                (person_name IS NULL OR person_name = '') 
+            AND 
+                (email_record IS NULL OR email_record = '')
+            )
+        )
+        AND email IS NOT NULL
         AND email <> ''
         AND role = 'author'
         """,
@@ -266,8 +300,14 @@ metagraph = MetaGraph(
             CAST(HASH(CONCAT(person_name, '|', email_record)) AS VARCHAR) AS from_id,
             CAST(HASH(email) AS VARCHAR) AS to_id
         FROM latest_email
-        WHERE person_name IS NOT NULL AND email_record IS NOT NULL AND email IS NOT NULL
-        AND email_record <> ''
+        WHERE (
+            NOT (
+                (person_name IS NULL OR person_name = '') 
+            AND 
+                (email_record IS NULL OR email_record = '')
+            )
+        )
+        AND email IS NOT NULL
         AND email <> ''
         AND role = 'maintainer'
         """,

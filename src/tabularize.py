@@ -1,6 +1,8 @@
 
 """
 Convert pandas with JSON column to plain pandas dataframe
+
+Parse Email and Person
 """
 from typing import List, Dict, Union, Optional
 import pandas as pd
@@ -8,6 +10,8 @@ import json
 from batch_framework.etl import ObjProcessor
 from collections import Counter
 from urllib.parse import urlparse
+import re
+EMAIL_PATTERN = re.compile(r"^(.*?)\s*<([^>]+)")
 
 class LatestTabularize(ObjProcessor):
     @property
@@ -85,10 +89,6 @@ class LatestTabularize(ObjProcessor):
             'version': record['latest']['info']['version'],
             'num_releases': record['latest']['num_releases'],
             'num_requires_dist': record['latest']['num_info_dependencies'],
-            'author': record['latest']['info']['author'],
-            'author_email': record['latest']['info']['author_email'],
-            'maintainer': record['latest']['info']['maintainer'],
-            'maintainer_email': record['latest']['info']['maintainer_email'],
             'license': license
         }
     
@@ -204,8 +204,11 @@ class LatestTabularize(ObjProcessor):
         Returns:
             List[Dict]:  List of the simplified dictionary with email unnested
         """
+        pkg_name = record['name']
         person = record['latest']['info'][role]
         person_email = record['latest']['info'][f'{role}_email']
+        if isinstance(person_email, str):
+            person, person_email = LatestTabularize._parse_person_n_email(person, person_email)
         results = []
         if isinstance(person_email, str):
             for email in person_email.split(','):
@@ -215,6 +218,7 @@ class LatestTabularize(ObjProcessor):
                 else:
                     top_level_domain = None
                 results.append({
+                    'pkg_name': pkg_name,
                     'person_name': person,
                     'email_record': person_email,
                     'email': email,
@@ -224,6 +228,27 @@ class LatestTabularize(ObjProcessor):
                 })
         return results
 
+    def _parse_person_n_email(person_name: Optional[str], person_email: str) -> Dict[str, str]:
+        """
+        Clean up email fields 
+        """
+        assert isinstance(person_email, str)
+        if '<' in person_email:
+            match = EMAIL_PATTERN.search(person_email)
+            if match:
+                name = match.group(1).strip()
+                email = match.group(2).strip()
+                if person_name is None:
+                    return name, email
+                elif '<' in person_name:
+                    return name, email
+                else:
+                    return person_name, email
+            else:
+                return person_name, person_email
+        else:
+            return person_name, person_email
+        
     @staticmethod
     def simplify_keywords(record: Dict, counter: Counter, threshold: int = 5) -> List[Dict[str, str]]:
         """Make keywords unnested
