@@ -83,10 +83,8 @@ metagraph = MetaGraph(
             CAST(HASH(pkg_name) AS VARCHAR) AS node_id,
             name,
             package_url,
-            project_url,
             requires_python,
             version,
-            keywords,
             CAST(num_releases AS INT) AS num_releases
         FROM latest_package
         """,

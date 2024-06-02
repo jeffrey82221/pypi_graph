@@ -76,17 +76,8 @@ class LatestTabularize(ObjProcessor):
             'pkg_name': record['name'],
             'name': record['latest']['info']['name'],
             'package_url': record['latest']['info']['package_url'],
-            'project_url': record['latest']['info']['project_url'],
             'requires_python': record['latest']['info']['requires_python'],
             'version': record['latest']['info']['version'],
-            'keywords': record['latest']['info']['keywords'],
-            'author': record['latest']['info']['author'],
-            'author_email': record['latest']['info']['author_email'],
-            'maintainer': record['latest']['info']['maintainer'],
-            'maintainer_email': record['latest']['info']['maintainer_email'],
-            'license': record['latest']['info']['license'],
-            'docs_url': record['latest']['info']['docs_url'],
-            'home_page': record['latest']['info']['home_page'],
             'num_releases': record['latest']['num_releases'],
             'num_requires_dist': record['latest']['num_info_dependencies']
         }
@@ -99,7 +90,7 @@ class LatestTabularize(ObjProcessor):
         """
         assert url_type in ['package_url', 'docs_url', 'home_page']
         pkg_name = record['name']
-        url = record['latest']['info'][url_type]
+        url = record['latest']['info'][url_type].strip('<>')
         return {
             'pkg_name': pkg_name,
             'url': url,
@@ -123,6 +114,7 @@ class LatestTabularize(ObjProcessor):
             results = []
             for key, url in record['latest']['info']['project_urls'].items():
                 if url is not None:
+                    url = url.strip('<>')
                     results.append(
                         {
                             'pkg_name': pkg_name,
