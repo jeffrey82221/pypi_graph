@@ -1,11 +1,9 @@
 from typing import List
 from batch_framework.filesystem import FileSystem
-from batch_framework.storage import PandasStorage
 from batch_framework.etl import ETLGroup, SQLExecutor
 from batch_framework.rdb import RDB
 from .groupers import NodeGrouper, LinkGrouper
 from .meta import GroupingMeta
-from .validate import Validator
 
 
 class Ingestor(SQLExecutor):
@@ -47,13 +45,12 @@ class GraphGrouper(ETLGroup):
         self._meta = meta
         self._inputs = node_grouper.input_ids + link_grouper.input_ids
         self._outputs = node_grouper.output_ids + link_grouper.output_ids
-        validator = Validator(self._meta, PandasStorage(output_fs))
         ingestor = Ingestor(
             self._outputs,
             rdb,
             input_fs=output_fs
         )
-        args = [node_grouper, link_grouper, validator, ingestor]
+        args = [node_grouper, link_grouper, ingestor]
         super().__init__(*args)
 
     @property

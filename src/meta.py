@@ -1,6 +1,11 @@
 """
 Defining how links and nodes are extracted from tabular data 
-and merged into final links and nodes
+and merged into final links and nodes.
+
+TODO:
+- [X] Create Domain with Top-level-domain from email and url node
+- [ ] Create path for github url
+- [ ] Extract github repo & github author node from path
 """
 from .graph import MetaGraph
 
@@ -12,14 +17,17 @@ subgraphs = {
     'has_url': ('package', 'url'),
     'has_keyword': ('package', 'keyword'),
     'author_has_email': ('author', 'email'),
-    'maintainer_has_email': ('maintainer', 'email')
+    'maintainer_has_email': ('maintainer', 'email'),
+    'email_hosted_by': ('email', 'email_domain'),
+    'url_hosted_by': ('url', 'url_domain')
 }
 
 metagraph = MetaGraph(
     subgraphs=subgraphs,
     node_grouping={
         'package': ['package', 'requirement'],
-        'person': ['author', 'maintainer']
+        'person': ['author', 'maintainer'],
+        'domain': ['email_domain', 'url_domain']
     },
     node_grouping_sqls={
         'package': """
@@ -36,13 +44,25 @@ metagraph = MetaGraph(
             t0.node_id,
             COALESCE(t1.name, t2.name) AS name,
             COALESCE(t1.email, t2.email) AS email
+        """,
+        'domain': """
+            DISTINCT ON (t0.node_id)
+            t0.node_id,
+            COALESCE(t1.domain, t2.domain) AS domain,
+            COALESCE(t1.top_level_domain, t2.top_level_domain) AS top_level_domain
         """
     },
     link_grouping={
-        'has_email': ['author_has_email', 'maintainer_has_email']
+        'has_email': ['author_has_email', 'maintainer_has_email'],
+        'hosted_by': ['email_hosted_by', 'url_hosted_by']
     },
     link_grouping_sqls={
         'has_email': """
+            t1.link_id,
+            t0.from_id,
+            t0.to_id
+        """,
+        'hosted_by': """
             t1.link_id,
             t0.from_id,
             t0.to_id
@@ -120,19 +140,6 @@ metagraph = MetaGraph(
             AND license <> ''
             AND count >= 2
         """,
-        # Project URL Node
-        'url': """
-        SELECT
-            DISTINCT ON (url)
-            CAST(HASH(url) AS VARCHAR) AS node_id,
-            url,
-            domain,
-            top_level_domain,
-            path
-        FROM latest_url
-        WHERE url IS NOT NULL
-        AND url <> 'UNKNOWN'
-        """,
         'keyword': """
         SELECT
             DISTINCT ON (keyword)
@@ -151,7 +158,39 @@ metagraph = MetaGraph(
             top_level_domain
         FROM latest_email
         WHERE email IS NOT NULL AND email <> ''
-        """
+        """,
+        # Project URL Node
+        'url': """
+        SELECT
+            DISTINCT ON (url)
+            CAST(HASH(url) AS VARCHAR) AS node_id,
+            url,
+            domain,
+            top_level_domain,
+            path
+        FROM latest_url
+        WHERE url IS NOT NULL
+        AND url <> 'UNKNOWN'
+        """,
+        'email_domain': """
+        SELECT 
+            DISTINCT ON (domain)
+            CAST(HASH(domain) AS VARCHAR) AS node_id,
+            domain,
+            top_level_domain
+        FROM latest_email
+        WHERE domain IS NOT NULL AND domain <> ''
+        """,
+        'url_domain': """
+        SELECT
+            DISTINCT ON (domain)
+            CAST(HASH(domain) AS VARCHAR) AS node_id,
+            domain,
+            top_level_domain
+        FROM latest_url
+        WHERE domain IS NOT NULL
+        AND domain <> 'UNKNOWN'
+        """,
     },
     link_sqls={
         # Has Requirement Link
@@ -275,7 +314,34 @@ metagraph = MetaGraph(
         FROM latest_url
         WHERE url IS NOT NULL
         AND url <> 'UNKNOWN'
-        """
+        """,
+        # URL hosted by Domain Link
+        'url_hosted_by': """
+        SELECT
+            DISTINCT ON (url, domain)
+            CAST(HASH(CONCAT(url,'|', domain)) AS VARCHAR) AS link_id,
+            CAST(HASH(url) AS VARCHAR) AS from_id,
+            CAST(HASH(domain) AS VARCHAR) AS to_id
+        FROM latest_url
+        WHERE url IS NOT NULL
+        AND url <> 'UNKNOWN'
+        AND domain IS NOT NULL
+        AND domain <> ''
+        """,
+        # email hosted by Domain Link
+        'email_hosted_by': """
+        SELECT
+            DISTINCT ON (email, domain)
+            CAST(HASH(CONCAT(email,'|', domain)) AS VARCHAR) AS link_id,
+            CAST(HASH(email) AS VARCHAR) AS from_id,
+            CAST(HASH(domain) AS VARCHAR) AS to_id
+        FROM latest_email
+        WHERE email_record IS NOT NULL AND email IS NOT NULL AND domain IS NOT NULL
+        AND email_record <> ''
+        AND email <> ''
+        AND domain <> ''
+        """,
+
     }
 )
 print(metagraph.link_grouping)
