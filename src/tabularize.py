@@ -25,10 +25,11 @@ class LatestTabularize(ObjProcessor):
         urls = []
         keywords = []
         keyword_counter = Counter()
+        license_counter = Counter()
         emails = []
         for record in inputs[0].to_dict('records'):
             record['latest'] = json.loads(record['latest'])
-            info = LatestTabularize.simplify_record(record)
+            info = LatestTabularize.simplify_record(record, license_counter=license_counter)
             _reqs = LatestTabularize.simplify_requires_dist(record)
             _urls = LatestTabularize.simplify_project_urls(record)
             _home_page_url = LatestTabularize.simplify_urls('home_page', record)
@@ -63,7 +64,7 @@ class LatestTabularize(ObjProcessor):
 
     @staticmethod
     def simplify_record(
-            record: Dict) -> Dict[str, Union[str, int, float, None]]:
+            record: Dict, license_counter: Counter) -> Dict[str, Union[str, int, float, None]]:
         """Simplify the nestest record dictionary
 
         Args:
@@ -72,6 +73,10 @@ class LatestTabularize(ObjProcessor):
         Returns:
             Dict: The simplified dictionary that is not nested
         """
+        license = record['latest']['info']['license']
+        license_counter[license] += 1
+        if license_counter[license] < 2:
+            license = None
         return {
             'pkg_name': record['name'],
             'name': record['latest']['info']['name'],
@@ -79,7 +84,12 @@ class LatestTabularize(ObjProcessor):
             'requires_python': record['latest']['info']['requires_python'],
             'version': record['latest']['info']['version'],
             'num_releases': record['latest']['num_releases'],
-            'num_requires_dist': record['latest']['num_info_dependencies']
+            'num_requires_dist': record['latest']['num_info_dependencies'],
+            'author': record['latest']['info']['author'],
+            'author_email': record['latest']['info']['author_email'],
+            'maintainer': record['latest']['info']['maintainer'],
+            'maintainer_email': record['latest']['info']['maintainer_email'],
+            'license': license
         }
     
     @staticmethod
@@ -90,7 +100,9 @@ class LatestTabularize(ObjProcessor):
         """
         assert url_type in ['package_url', 'docs_url', 'home_page']
         pkg_name = record['name']
-        url = record['latest']['info'][url_type].strip('<>')
+        url = record['latest']['info'][url_type]
+        if isinstance(url, str):
+            url = url.strip('<>')
         return {
             'pkg_name': pkg_name,
             'url': url,
@@ -133,9 +145,15 @@ class LatestTabularize(ObjProcessor):
         Extract domain, top_level_domain, path from url
         """
         parsed = urlparse(url)
-        domain = str(parsed.netloc)
-        path = str(parsed.path)
-        if '.' in domain:
+        if len(parsed.netloc):
+            domain = str(parsed.netloc)
+        else:
+            domain = None
+        if len(parsed.path):
+            path = str(parsed.path).replace('//', '/')
+        else:
+            path = None
+        if isinstance(domain, str) and '.' in domain:
             top_level_domain = domain.split('.')[-1]
         else:
             top_level_domain = None
@@ -143,7 +161,39 @@ class LatestTabularize(ObjProcessor):
             'domain': domain,
             'top_level_domain': top_level_domain,
             'path': path,
+            **LatestTabularize._extract_github_repo(domain, path)
         }
+    
+    @staticmethod
+    def _extract_github_repo(domain: Optional[str], path: Optional[str]) -> Dict[str, Optional[str]]:
+        """
+        Obtain github repo features from url
+        """
+        if domain is not None and path is not None and domain == 'github.com':
+            path = path.strip('/')
+            if path.endswith('.git'):
+                path = path.strip('.git')
+            if '/' not in path:
+                if path != '...' and path != '..' and path != '*.zip':
+                    github_account = path
+                else:
+                    github_account = None
+                return {
+                    'github_repo': None,
+                    'github_account': github_account
+                }
+            else:
+                github_repo = '/'.join(path.split('/')[:2])
+                github_account = path.split('/')[0]
+                return {
+                    'github_repo': github_repo,
+                    'github_account': github_account
+                }
+        else:
+            return {
+                'github_repo': None,
+                'github_account': None
+            }
 
     @staticmethod
     def simplify_emails(role: str, record: Dict) -> List[Dict[str, Optional[str]]]:

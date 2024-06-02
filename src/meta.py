@@ -19,7 +19,10 @@ subgraphs = {
     'author_has_email': ('author', 'email'),
     'maintainer_has_email': ('maintainer', 'email'),
     'email_hosted_by': ('email', 'email_domain'),
-    'url_hosted_by': ('url', 'url_domain')
+    'url_hosted_by': ('url', 'url_domain'),
+    'released_by': ('package', 'github_account'),
+    'released_from': ('package', 'github_repo'),
+    'owned_by': ('github_repo', 'github_account')
 }
 
 metagraph = MetaGraph(
@@ -53,16 +56,10 @@ metagraph = MetaGraph(
         """
     },
     link_grouping={
-        'has_email': ['author_has_email', 'maintainer_has_email'],
-        'hosted_by': ['email_hosted_by', 'url_hosted_by']
+        'has_email': ['author_has_email', 'maintainer_has_email']
     },
     link_grouping_sqls={
         'has_email': """
-            t1.link_id,
-            t0.from_id,
-            t0.to_id
-        """,
-        'hosted_by': """
             t1.link_id,
             t0.from_id,
             t0.to_id
@@ -120,23 +117,15 @@ metagraph = MetaGraph(
         """,
         # License Node
         'license': """
-        WITH count_table AS (
-            SELECT
-                license,
-                count(*) AS count
-            FROM latest_package
-            GROUP BY license
-        )
         SELECT
             DISTINCT ON (license)
             CAST(HASH(license) AS VARCHAR) AS node_id,
             license AS name
-        FROM count_table
+        FROM latest_package
         WHERE license IS NOT NULL
             AND license <> 'UNKNOWN'
             AND license <> 'LICENSE.txt'
             AND license <> ''
-            AND count >= 2
         """,
         'keyword': """
         SELECT
@@ -169,6 +158,7 @@ metagraph = MetaGraph(
         FROM latest_url
         WHERE url IS NOT NULL
         AND url <> 'UNKNOWN'
+        AND url <> ''
         """,
         'email_domain': """
         SELECT 
@@ -188,6 +178,25 @@ metagraph = MetaGraph(
         FROM latest_url
         WHERE domain IS NOT NULL
         AND domain <> 'UNKNOWN'
+        AND domain <> ''
+        """,
+        'github_repo': """
+        SELECT
+            DISTINCT ON (github_repo)
+            CAST(HASH(github_repo) AS VARCHAR) AS node_id,
+            github_repo
+        FROM latest_url
+        WHERE github_repo IS NOT NULL
+        AND github_repo <> ''
+        """,
+        'github_account': """
+        SELECT
+            DISTINCT ON (github_account)
+            CAST(HASH(github_account) AS VARCHAR) AS node_id,
+            github_account
+        FROM latest_url
+        WHERE github_account IS NOT NULL
+        AND github_account <> ''
         """,
     },
     link_sqls={
@@ -264,44 +273,18 @@ metagraph = MetaGraph(
         """,
         # Has License Link
         'has_license': """
-        WITH
-            count_table AS (
-                SELECT
-                    license,
-                    count(*) AS count
-                FROM latest_package
-                GROUP BY license
-            ),
-            node_table AS (
-                SELECT
-                    DISTINCT ON (license)
-                    CAST(HASH(license) AS VARCHAR) AS node_id
-                FROM count_table
-                WHERE license IS NOT NULL
-                    AND license <> 'UNKNOWN'
-                    AND license <> 'LICENSE.txt'
-                    AND license <> ''
-                    AND count >= 2
-            ),
-            link_table AS (
-                SELECT
-                    DISTINCT ON (license, pkg_name)
-                    CAST(HASH(CONCAT(pkg_name,'|',license)) AS VARCHAR) AS link_id,
-                    CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
-                    CAST(HASH(license) AS VARCHAR) AS to_id,
-                FROM latest_package
-            )
         SELECT
-            link_id,
-            from_id,
-            to_id
-        FROM link_table
-        WHERE EXISTS (
-            SELECT * FROM node_table
-            WHERE node_table.node_id = link_table.to_id
-        )
+            DISTINCT ON (pkg_name, license)
+            CAST(HASH(CONCAT(pkg_name,'|',license)) AS VARCHAR) AS link_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+            CAST(HASH(license) AS VARCHAR) AS to_id,
+        FROM latest_package
+        WHERE license IS NOT NULL
+            AND license <> 'UNKNOWN'
+            AND license <> 'LICENSE.txt'
+            AND license <> ''
         """,
-        # Project URL Node
+        # Package has URL
         'has_url': """
         SELECT
             DISTINCT ON (pkg_name, url)
@@ -312,6 +295,42 @@ metagraph = MetaGraph(
         FROM latest_url
         WHERE url IS NOT NULL
         AND url <> 'UNKNOWN'
+        AND url <> ''
+        """,
+        # Package coded from a Github Repo
+        'released_from': """
+        SELECT
+            DISTINCT ON (pkg_name, github_repo)
+            CAST(HASH(CONCAT(pkg_name,'|',github_repo)) AS VARCHAR) AS link_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+            CAST(HASH(github_repo) AS VARCHAR) AS to_id
+        FROM latest_url
+        WHERE github_repo IS NOT NULL
+        AND github_repo <> ''
+        """,
+        # Package coded by a Github Account
+        'released_by': """
+        SELECT
+            DISTINCT ON (pkg_name, github_account)
+            CAST(HASH(CONCAT(pkg_name,'|',github_account)) AS VARCHAR) AS link_id,
+            CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
+            CAST(HASH(github_account) AS VARCHAR) AS to_id
+        FROM latest_url
+        WHERE github_account IS NOT NULL
+        AND github_account <> ''
+        """,
+        # Github Account belong to a Github Account
+        'owned_by': """
+        SELECT
+            DISTINCT ON (github_repo, github_account)
+            CAST(HASH(CONCAT(github_repo,'|',github_account)) AS VARCHAR) AS link_id,
+            CAST(HASH(github_repo) AS VARCHAR) AS from_id,
+            CAST(HASH(github_account) AS VARCHAR) AS to_id
+        FROM latest_url
+        WHERE github_account IS NOT NULL
+        AND github_account <> ''
+        AND github_repo IS NOT NULL
+        AND github_repo <> ''
         """,
         # URL hosted by Domain Link
         'url_hosted_by': """
