@@ -1,7 +1,5 @@
 name: create_duck_db_dump
 on:
-    push:
-        branches: main
     workflow_run:
         workflows: ["ETL"]
         types:
