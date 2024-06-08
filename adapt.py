@@ -8,7 +8,7 @@ import json
 rdb = DuckDBBackend(LocalBackend('data/duckdb'), db_name='demo.db')
 to_puppygraph_adaptor = ResultCollectLayer(
     rdb, metagraph=metagraph,
-    input_fs=LocalBackend('data/graph/')
+    input_fs=DropboxBackend('/data/graph/')
 )
 
 if __name__ == '__main__':
