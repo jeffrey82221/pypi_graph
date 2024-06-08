@@ -1,0 +1,27 @@
+name: create_duck_db_dump
+on:
+    push:
+        branches: main
+    workflow_run:
+        workflows: ["ETL"]
+        types:
+            - completed
+jobs:
+    batch_job:
+        runs-on: ubuntu-latest
+        steps:
+        - name: sync code
+            uses: actions/checkout@v4
+        - name: setup python
+            uses: actions/setup-python@v5
+            with:
+            python-version: '3.10'
+        - name: install packages
+            run: "pip install --upgrade pip\npython -m pip install --upgrade setuptools\
+            \ \npython -m pip install -r requirements.txt\n"
+        - env:
+            DROPBOX_APP_KEY: ${{ secrets.DROPBOX_APP_KEY }}
+            DROPBOX_APP_SECRET: ${{ secrets.DROPBOX_APP_SECRET }}
+            DROPBOX_REFRESH_TOKEN: ${{ secrets.DROPBOX_REFRESH_TOKEN }}
+            name: run adapt
+            run: python adapt.py
