@@ -34,12 +34,12 @@ def get_transformer(local: bool = False) -> WholeGraphDataPlatform:
             metagraph=copy.deepcopy(metagraph),
             raw_fs=DropboxBackend('/data/canon/raw/'),
             canon_fs=DropboxBackend('/data/canon/output/'),
-            subgraph_fs=DropboxBackend('data/subgraph/'),
-            output_fs=DropboxBackend('data/graph/')
+            subgraph_fs=DropboxBackend('/data/subgraph/'),
+            output_fs=DropboxBackend('/data/graph/')
         )
 
 
 if __name__ == '__main__':
     # rawdata_cloud2local()
-    graph_platform = get_transformer(local=True)
+    graph_platform = get_transformer(local=False)
     graph_platform.execute()

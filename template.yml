@@ -1,0 +1,5 @@
+name: ETL
+'on':
+    push:
+      branches: main
+jobs:
