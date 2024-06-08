@@ -13,6 +13,7 @@ from urllib.parse import urlparse
 import re
 EMAIL_PATTERN = re.compile(r"^(.*?)\s*<([^>]+)")
 
+
 class LatestTabularize(ObjProcessor):
     @property
     def input_ids(self):
@@ -20,7 +21,7 @@ class LatestTabularize(ObjProcessor):
 
     @property
     def output_ids(self):
-        return ['latest_package', 'latest_requirement', 'latest_url', 
+        return ['latest_package', 'latest_requirement', 'latest_url',
                 'latest_keyword', 'latest_email']
 
     def transform(self, inputs: List[pd.DataFrame]) -> List[pd.DataFrame]:
@@ -33,14 +34,18 @@ class LatestTabularize(ObjProcessor):
         emails = []
         for record in inputs[0].to_dict('records'):
             record['latest'] = json.loads(record['latest'])
-            info = LatestTabularize.simplify_record(record, license_counter=license_counter)
+            info = LatestTabularize.simplify_record(
+                record, license_counter=license_counter)
             _reqs = LatestTabularize.simplify_requires_dist(record)
             _urls = LatestTabularize.simplify_project_urls(record)
-            _home_page_url = LatestTabularize.simplify_urls('home_page', record)
+            _home_page_url = LatestTabularize.simplify_urls(
+                'home_page', record)
             _docs_url = LatestTabularize.simplify_urls('docs_url', record)
-            _keywords = LatestTabularize.simplify_keywords(record, counter=keyword_counter)
+            _keywords = LatestTabularize.simplify_keywords(
+                record, counter=keyword_counter)
             _author_emails = LatestTabularize.simplify_emails('author', record)
-            _maintainer_emails = LatestTabularize.simplify_emails('maintainer', record)
+            _maintainer_emails = LatestTabularize.simplify_emails(
+                'maintainer', record)
             infos.append(info)
             reqs.extend(_reqs)
             urls.extend(_urls)
@@ -91,7 +96,7 @@ class LatestTabularize(ObjProcessor):
             'num_requires_dist': record['latest']['num_info_dependencies'],
             'license': license
         }
-    
+
     @staticmethod
     def simplify_urls(url_type: str, record: Dict) -> Dict[str, str]:
         """
@@ -109,7 +114,7 @@ class LatestTabularize(ObjProcessor):
             'url_type': url_type,
             **LatestTabularize._extract_url_features(url)
         }
-    
+
     @staticmethod
     def simplify_project_urls(
             record: Dict) -> List[Dict[str, str]]:
@@ -163,9 +168,10 @@ class LatestTabularize(ObjProcessor):
             'path': path,
             **LatestTabularize._extract_github_repo(domain, path)
         }
-    
+
     @staticmethod
-    def _extract_github_repo(domain: Optional[str], path: Optional[str]) -> Dict[str, Optional[str]]:
+    def _extract_github_repo(
+            domain: Optional[str], path: Optional[str]) -> Dict[str, Optional[str]]:
         """
         Obtain github repo features from url
         """
@@ -196,7 +202,8 @@ class LatestTabularize(ObjProcessor):
             }
 
     @staticmethod
-    def simplify_emails(role: str, record: Dict) -> List[Dict[str, Optional[str]]]:
+    def simplify_emails(
+            role: str, record: Dict) -> List[Dict[str, Optional[str]]]:
         """Make email unnested and extract domain name and top level domain name
         Args:
             role (str): author or maintainer
@@ -208,7 +215,8 @@ class LatestTabularize(ObjProcessor):
         person = record['latest']['info'][role]
         person_email = record['latest']['info'][f'{role}_email']
         if isinstance(person_email, str):
-            person, person_email = LatestTabularize._parse_person_n_email(person, person_email)
+            person, person_email = LatestTabularize._parse_person_n_email(
+                person, person_email)
         results = []
         if isinstance(person_email, str):
             for email in person_email.split(','):
@@ -228,9 +236,10 @@ class LatestTabularize(ObjProcessor):
                 })
         return results
 
-    def _parse_person_n_email(person_name: Optional[str], person_email: str) -> Dict[str, str]:
+    def _parse_person_n_email(
+            person_name: Optional[str], person_email: str) -> Dict[str, str]:
         """
-        Clean up email fields 
+        Clean up email fields
         """
         assert isinstance(person_email, str)
         if '<' in person_email:
@@ -248,9 +257,10 @@ class LatestTabularize(ObjProcessor):
                 return person_name, person_email
         else:
             return person_name, person_email
-        
+
     @staticmethod
-    def simplify_keywords(record: Dict, counter: Counter, threshold: int = 5) -> List[Dict[str, str]]:
+    def simplify_keywords(record: Dict, counter: Counter,
+                          threshold: int = 5) -> List[Dict[str, str]]:
         """Make keywords unnested
         Args:
             record (Dict): A nested dictionary
@@ -273,7 +283,8 @@ class LatestTabularize(ObjProcessor):
         return results
 
     @staticmethod
-    def _parse_n_insert_keywords(results: List[Dict[str, str]], counter: Counter, pkg_name: str, keywords: str, split_mark: str):
+    def _parse_n_insert_keywords(
+            results: List[Dict[str, str]], counter: Counter, pkg_name: str, keywords: str, split_mark: str):
         for keyword in keywords.split(split_mark):
             _keyword = keyword.strip().lower().strip('[]').strip('""')
             if _keyword != '':
@@ -283,7 +294,6 @@ class LatestTabularize(ObjProcessor):
                         'pkg_name': pkg_name,
                         'keyword': _keyword
                     })
-
 
     @staticmethod
     def simplify_requires_dist(
@@ -309,7 +319,7 @@ class LatestTabularize(ObjProcessor):
                         'newest_dist': None,
                         'oldest_dist': None
                     }
-                else:    
+                else:
                     num_match_dist = len(data[req_name]['releases'])
                     if num_match_dist:
                         newest_dist = max(data[req_name]['releases'])
@@ -329,5 +339,3 @@ class LatestTabularize(ObjProcessor):
             return results
         else:
             return []
-
-    

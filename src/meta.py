@@ -1,5 +1,5 @@
 """
-Defining how links and nodes are extracted from tabular data 
+Defining how links and nodes are extracted from tabular data
 and merged into final links and nodes.
 
 TODO:
@@ -101,11 +101,11 @@ metagraph = MetaGraph(
             person_name AS name,
             email_record AS email
         FROM latest_email
-        WHERE 
+        WHERE
         (
             NOT (
-                (person_name IS NULL OR person_name = '') 
-            AND 
+                (person_name IS NULL OR person_name = '')
+            AND
                 (email_record IS NULL OR email_record = '')
             )
         )
@@ -119,11 +119,11 @@ metagraph = MetaGraph(
             person_name AS name,
             email_record AS email
         FROM latest_email
-        WHERE 
+        WHERE
         (
             NOT (
-                (person_name IS NULL OR person_name = '') 
-            AND 
+                (person_name IS NULL OR person_name = '')
+            AND
                 (email_record IS NULL OR email_record = '')
             )
         )
@@ -151,7 +151,7 @@ metagraph = MetaGraph(
         AND keyword <> ''
         """,
         'email': """
-        SELECT 
+        SELECT
             DISTINCT ON (email)
             CAST(HASH(email) AS VARCHAR) AS node_id,
             email,
@@ -175,7 +175,7 @@ metagraph = MetaGraph(
         AND url <> ''
         """,
         'email_domain': """
-        SELECT 
+        SELECT
             DISTINCT ON (domain)
             CAST(HASH(domain) AS VARCHAR) AS node_id,
             domain,
@@ -246,11 +246,11 @@ metagraph = MetaGraph(
             CAST(HASH(pkg_name) AS VARCHAR) AS from_id,
             CAST(HASH(CONCAT(person_name, '|', email_record)) AS VARCHAR) AS to_id
         FROM latest_email
-        WHERE 
+        WHERE
         (
             NOT (
-                (person_name IS NULL OR person_name = '') 
-            AND 
+                (person_name IS NULL OR person_name = '')
+            AND
                 (email_record IS NULL OR email_record = '')
             )
         )
@@ -267,8 +267,8 @@ metagraph = MetaGraph(
         WHERE
         (
             NOT (
-                (person_name IS NULL OR person_name = '') 
-            AND 
+                (person_name IS NULL OR person_name = '')
+            AND
                 (email_record IS NULL OR email_record = '')
             )
         )
@@ -284,8 +284,8 @@ metagraph = MetaGraph(
         FROM latest_email
         WHERE (
             NOT (
-                (person_name IS NULL OR person_name = '') 
-            AND 
+                (person_name IS NULL OR person_name = '')
+            AND
                 (email_record IS NULL OR email_record = '')
             )
         )
@@ -302,8 +302,8 @@ metagraph = MetaGraph(
         FROM latest_email
         WHERE (
             NOT (
-                (person_name IS NULL OR person_name = '') 
-            AND 
+                (person_name IS NULL OR person_name = '')
+            AND
                 (email_record IS NULL OR email_record = '')
             )
         )

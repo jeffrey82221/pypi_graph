@@ -13,12 +13,15 @@ type_mapping = {
     'NUMERIC': 'Double'
 }
 
+
 class ResultCollectLayer(SQLExecutor):
     """
-    Store all generated links and nodes tables 
+    Store all generated links and nodes tables
     into DuckDB.
     """
-    def __init__(self, rdb: DuckDBBackend, metagraph: MetaGraph, input_fs: FileSystem):
+
+    def __init__(self, rdb: DuckDBBackend, metagraph: MetaGraph,
+                 input_fs: FileSystem):
         nodes = list(metagraph.node_grouping.keys())
         links = list(metagraph.triplets.keys())
         self._targets = [
@@ -42,6 +45,7 @@ class ResultCollectLayer(SQLExecutor):
             results[target] = f'SELECT * FROM {target}_final'
         return results
 
+
 def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
     """
     Generate schema.json of puppy graph
@@ -54,7 +58,8 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
     nodes = list(metagraph.node_grouping.keys())
     links = list(metagraph.triplets.keys())
     db_table_names = sorted(db_tables.index.tolist())
-    target_table_names = sorted([f'node_{n}' for n in nodes] + [f'link_{l}' for l in links])
+    target_table_names = sorted(
+        [f'node_{n}' for n in nodes] + [f'link_{l}' for l in links])
     assert len(db_table_names) == len(
         target_table_names), f'duck db missing tables: {set(target_table_names) - set(db_table_names)}'
     schema = dict()

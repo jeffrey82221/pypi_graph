@@ -8,7 +8,6 @@ from .graph.metagraph import MetaGraph
 from .tabularize import LatestTabularize
 
 
-
 class WholeGraphDataPlatform(ETLGroup):
     """
     Data Flow:
@@ -35,7 +34,7 @@ class WholeGraphDataPlatform(ETLGroup):
             )
         )
         args.append(GraphDataPlatform(
-            metagraph, 
+            metagraph,
             canon_fs,
             subgraph_fs=subgraph_fs,
             output_fs=output_fs,

@@ -20,7 +20,6 @@ def rawdata_cloud2local():
             print('folder:', folder, 'file:', file, 'uploaded')
 
 
-
 def get_transformer(local: bool = False) -> WholeGraphDataPlatform:
     if local:
         return WholeGraphDataPlatform(
