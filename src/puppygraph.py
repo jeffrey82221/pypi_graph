@@ -1,6 +1,10 @@
 import duckdb
 from typing import Dict
+from batch_framework.etl import SQLExecutor
+from batch_framework.rdb import DuckDBBackend
+from batch_framework.filesystem import FileSystem
 from .meta import MetaGraph
+
 type_mapping = {
     'VARCHAR': 'String',
     'INTEGER': 'Int',
@@ -9,6 +13,34 @@ type_mapping = {
     'NUMERIC': 'Double'
 }
 
+class ResultCollectLayer(SQLExecutor):
+    """
+    Store all generated links and nodes tables 
+    into DuckDB.
+    """
+    def __init__(self, rdb: DuckDBBackend, metagraph: MetaGraph, input_fs: FileSystem):
+        nodes = list(metagraph.node_grouping.keys())
+        links = list(metagraph.triplets.keys())
+        self._targets = [
+            f'node_{n}' for n in nodes
+        ] + [
+            f'link_{l}' for l in links
+        ]
+        super().__init__(rdb, input_fs=input_fs)
+
+    @property
+    def input_ids(self):
+        return [f'{t}_final' for t in self._targets]
+
+    @property
+    def output_ids(self):
+        return self._targets
+
+    def sqls(self, **kwargs):
+        results = dict()
+        for target in self._targets:
+            results[target] = f'SELECT * FROM {target}_final'
+        return results
 
 def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
     """
@@ -21,8 +53,10 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
     print(db_tables[['column_names', 'column_types']])
     nodes = list(metagraph.node_grouping.keys())
     links = list(metagraph.triplets.keys())
-    assert len(db_tables) == len(
-        nodes + links), 'duck db schema does not match with metagraph'
+    db_table_names = sorted(db_tables.index.tolist())
+    target_table_names = sorted([f'node_{n}' for n in nodes] + [f'link_{l}' for l in links])
+    assert len(db_table_names) == len(
+        target_table_names), f'duck db missing tables: {set(target_table_names) - set(db_table_names)}'
     schema = dict()
     schema['catalogs'] = [
         {
@@ -36,8 +70,9 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
     ]
     vertices = []
     for node in nodes:
-        column_names = db_tables.loc[f'node_{node}']['column_names']
-        column_types = db_tables.loc[f'node_{node}']['column_types']
+        table_name = f'node_{node}'
+        column_names = db_tables.loc[table_name]['column_names']
+        column_types = db_tables.loc[table_name]['column_types']
         attributes = [{
             'type': type_mapping[t],
             'name': n
@@ -49,7 +84,7 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
                 'mappedTableSource': {
                     'catalog': 'duckdb_data',
                     'schema': 'main',
-                    'table': f'node_{node}',
+                    'table': table_name,
                     'metaFields': {
                         "id": 'node_id'
                     }
@@ -59,11 +94,9 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
         )
     edges = []
     for link in links:
-        try:
-            column_names = db_tables.loc[f'link_{link}']['column_names']
-            column_types = db_tables.loc[f'link_{link}']['column_types']
-        except KeyError as e:
-            raise ValueError(db_tables) from e
+        table_name = f'link_{link}'
+        column_names = db_tables.loc[table_name]['column_names']
+        column_types = db_tables.loc[table_name]['column_types']
         attributes = [{
             'type': type_mapping[t],
             'name': n
@@ -74,7 +107,7 @@ def convert_duckdb_to_schema(duckdb_path: str, metagraph: MetaGraph) -> Dict:
                 'mappedTableSource': {
                     'catalog': 'duckdb_data',
                     'schema': 'main',
-                    'table': f'link_{link}',
+                    'table': table_name,
                     'metaFields': {
                         "id": 'link_id',
                         "from": 'from_id',
