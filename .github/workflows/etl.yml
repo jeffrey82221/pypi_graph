@@ -1,24 +1,66 @@
 jobs:
   id_0:
-    name: <bound method ETL.start of src-graph-group-main-GraphGrouper-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-released_by-author_has_email-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>
-    needs: []
+    name: <bound method ETL.end of src-graph-group-main-GraphGrouper-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-has_maintainer-has_license-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-owned_by-has_url-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>
+    needs:
+    - id_42
+    - id_37
+    - id_40
+    - id_34
+    - id_38
+    - id_39
+    - id_31
+    - id_41
+    - id_36
+    - id_45
+    - id_53
+    - id_33
+    - id_52
+    - id_48
+    - id_46
+    - id_47
+    - id_32
+    - id_50
+    - id_51
+    - id_49
+    - id_35
     runs-on: ubuntu-latest
     steps:
-    - name: start
-      run: echo '<bound method ETL.start of src-graph-group-main-GraphGrouper-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-released_by-author_has_email-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>'
+    - name: end
+      run: echo '<bound method ETL.end of src-graph-group-main-GraphGrouper-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-has_maintainer-has_license-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-owned_by-has_url-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>'
   id_1:
-    name: <bound method ETL.start of src-graph-main-GraphDataPlatform-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>
-    needs: []
+    name: <bound method ETL.end of src-graph-main-GraphDataPlatform-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>
+    needs:
+    - id_42
+    - id_37
+    - id_40
+    - id_34
+    - id_38
+    - id_39
+    - id_31
+    - id_41
+    - id_36
+    - id_45
+    - id_53
+    - id_33
+    - id_52
+    - id_48
+    - id_46
+    - id_47
+    - id_32
+    - id_50
+    - id_51
+    - id_49
+    - id_35
     runs-on: ubuntu-latest
     steps:
-    - name: start
-      run: echo '<bound method ETL.start of src-graph-main-GraphDataPlatform-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>'
+    - name: end
+      run: echo '<bound method ETL.end of src-graph-main-GraphDataPlatform-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>'
   id_10:
     name: author
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: author
@@ -26,9 +68,9 @@ jobs:
   id_11:
     name: author_has_email
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: author_has_email
@@ -36,9 +78,9 @@ jobs:
   id_12:
     name: email
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: email
@@ -46,9 +88,9 @@ jobs:
   id_13:
     name: email_domain
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: email_domain
@@ -56,9 +98,9 @@ jobs:
   id_14:
     name: email_hosted_by
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: email_hosted_by
@@ -66,9 +108,9 @@ jobs:
   id_15:
     name: github_account
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: github_account
@@ -76,9 +118,9 @@ jobs:
   id_16:
     name: github_repo
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: github_repo
@@ -86,9 +128,9 @@ jobs:
   id_17:
     name: has_author
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: has_author
@@ -96,9 +138,9 @@ jobs:
   id_18:
     name: has_keyword
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: has_keyword
@@ -106,26 +148,26 @@ jobs:
   id_19:
     name: has_license
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: has_license
       run: echo 'has_license'
   id_2:
-    name: <bound method ETL.start of src-graph-subgraph-main-SubgraphExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword>
+    name: <bound method ETL.end of src-graph-subgraph-validate-Validator-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license>
     needs: []
     runs-on: ubuntu-latest
     steps:
-    - name: start
-      run: echo '<bound method ETL.start of src-graph-subgraph-main-SubgraphExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword>'
+    - name: end
+      run: echo '<bound method ETL.end of src-graph-subgraph-validate-Validator-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license>'
   id_20:
     name: has_maintainer
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: has_maintainer
@@ -133,9 +175,9 @@ jobs:
   id_21:
     name: has_requirement
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: has_requirement
@@ -143,9 +185,9 @@ jobs:
   id_22:
     name: has_url
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: has_url
@@ -153,9 +195,9 @@ jobs:
   id_23:
     name: keyword
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: keyword
@@ -163,7 +205,7 @@ jobs:
   id_24:
     name: latest
     needs:
-    - id_4
+    - id_8
     runs-on: ubuntu-latest
     steps:
     - name: latest
@@ -171,9 +213,9 @@ jobs:
   id_25:
     name: latest_email
     needs:
-    - id_2
     - id_89
-    - id_1
+    - id_5
+    - id_6
     runs-on: ubuntu-latest
     steps:
     - name: latest_email
@@ -181,9 +223,9 @@ jobs:
   id_26:
     name: latest_keyword
     needs:
-    - id_2
     - id_89
-    - id_1
+    - id_5
+    - id_6
     runs-on: ubuntu-latest
     steps:
     - name: latest_keyword
@@ -191,9 +233,9 @@ jobs:
   id_27:
     name: latest_package
     needs:
-    - id_2
     - id_89
-    - id_1
+    - id_5
+    - id_6
     runs-on: ubuntu-latest
     steps:
     - name: latest_package
@@ -201,9 +243,9 @@ jobs:
   id_28:
     name: latest_requirement
     needs:
-    - id_2
     - id_89
-    - id_1
+    - id_5
+    - id_6
     runs-on: ubuntu-latest
     steps:
     - name: latest_requirement
@@ -211,26 +253,47 @@ jobs:
   id_29:
     name: latest_url
     needs:
-    - id_2
     - id_89
-    - id_1
+    - id_5
+    - id_6
     runs-on: ubuntu-latest
     steps:
     - name: latest_url
       run: echo 'latest_url'
   id_3:
-    name: <bound method ETL.start of src-graph-subgraph-validate-Validator-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword>
-    needs: []
+    name: <bound method ETL.end of src-main-WholeGraphDataPlatform-in-latest-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>
+    needs:
+    - id_42
+    - id_37
+    - id_40
+    - id_34
+    - id_38
+    - id_39
+    - id_31
+    - id_41
+    - id_36
+    - id_45
+    - id_53
+    - id_33
+    - id_52
+    - id_48
+    - id_46
+    - id_47
+    - id_32
+    - id_50
+    - id_51
+    - id_49
+    - id_35
     runs-on: ubuntu-latest
     steps:
-    - name: start
-      run: echo '<bound method ETL.start of src-graph-subgraph-validate-Validator-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword>'
+    - name: end
+      run: echo '<bound method ETL.end of src-main-WholeGraphDataPlatform-in-latest-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>'
   id_30:
     name: license
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: license
@@ -308,12 +371,12 @@ jobs:
     - name: link_owned_by_final
       run: echo 'link_owned_by_final'
   id_4:
-    name: <bound method ETL.start of src-main-WholeGraphDataPlatform-in-latest-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>
+    name: <bound method ETL.start of src-graph-group-main-GraphGrouper-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-has_maintainer-has_license-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-owned_by-has_url-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>
     needs: []
     runs-on: ubuntu-latest
     steps:
     - name: start
-      run: echo '<bound method ETL.start of src-main-WholeGraphDataPlatform-in-latest-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>'
+      run: echo '<bound method ETL.start of src-graph-group-main-GraphGrouper-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-has_maintainer-has_license-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-owned_by-has_url-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>'
   id_40:
     name: link_released_by_final
     needs:
@@ -341,9 +404,9 @@ jobs:
   id_43:
     name: maintainer
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: maintainer
@@ -351,9 +414,9 @@ jobs:
   id_44:
     name: maintainer_has_email
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: maintainer_has_email
@@ -399,34 +462,12 @@ jobs:
     - name: node_keyword_final
       run: echo 'node_keyword_final'
   id_5:
-    name: <bound method ETLGroup._end of src-graph-group-main-GraphGrouper-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-released_by-author_has_email-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>
-    needs:
-    - id_53
-    - id_33
-    - id_40
-    - id_35
-    - id_31
-    - id_37
-    - id_49
-    - id_32
-    - id_52
-    - id_39
-    - id_45
-    - id_51
-    - id_41
-    - id_34
-    - id_36
-    - id_38
-    - id_47
-    - id_42
-    - id_48
-    - id_50
-    - id_46
-    secrets: inherit
-    uses: ./.github/workflows/job.yml
-    with:
-      task-id: id_5
-      task-name: <bound method ETLGroup._end of src-graph-group-main-GraphGrouper-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-released_by-author_has_email-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>
+    name: <bound method ETL.start of src-graph-main-GraphDataPlatform-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>
+    needs: []
+    runs-on: ubuntu-latest
+    steps:
+    - name: start
+      run: echo '<bound method ETL.start of src-graph-main-GraphDataPlatform-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>'
   id_50:
     name: node_license_final
     needs:
@@ -462,9 +503,9 @@ jobs:
   id_54:
     name: owned_by
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: owned_by
@@ -472,9 +513,9 @@ jobs:
   id_55:
     name: package
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: package
@@ -482,9 +523,9 @@ jobs:
   id_56:
     name: released_by
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: released_by
@@ -492,9 +533,9 @@ jobs:
   id_57:
     name: released_from
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: released_from
@@ -502,109 +543,87 @@ jobs:
   id_58:
     name: requirement
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: requirement
       run: echo 'requirement'
   id_59:
-    name: src-graph-group-groupers-LinkGrouper-in-has_license-owned_by-released_by-author_has_email-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword-out-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final
+    name: src-graph-group-groupers-LinkGrouper-in-has_requirement-email_hosted_by-maintainer_has_email-has_maintainer-has_license-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-owned_by-has_url-out-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final
     needs:
-    - id_19
-    - id_54
-    - id_56
-    - id_11
+    - id_21
     - id_14
-    - id_20
+    - id_44
     - id_22
+    - id_20
     - id_92
+    - id_11
+    - id_18
+    - id_56
     - id_57
     - id_17
-    - id_44
-    - id_21
-    - id_18
+    - id_54
+    - id_19
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
       task-id: id_59
-      task-name: src-graph-group-groupers-LinkGrouper-in-has_license-owned_by-released_by-author_has_email-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword-out-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final
+      task-name: src-graph-group-groupers-LinkGrouper-in-has_requirement-email_hosted_by-maintainer_has_email-has_maintainer-has_license-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-owned_by-has_url-out-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final
   id_6:
-    name: <bound method ETLGroup._end of src-graph-main-GraphDataPlatform-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>
-    needs:
-    - id_53
-    - id_33
-    - id_40
-    - id_35
-    - id_31
-    - id_37
-    - id_49
-    - id_32
-    - id_52
-    - id_39
-    - id_45
-    - id_51
-    - id_41
-    - id_34
-    - id_36
-    - id_38
-    - id_47
-    - id_42
-    - id_48
-    - id_50
-    - id_46
-    secrets: inherit
-    uses: ./.github/workflows/job.yml
-    with:
-      task-id: id_6
-      task-name: <bound method ETLGroup._end of src-graph-main-GraphDataPlatform-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>
+    name: <bound method ETL.start of src-graph-subgraph-main-SubgraphExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license>
+    needs: []
+    runs-on: ubuntu-latest
+    steps:
+    - name: start
+      run: echo '<bound method ETL.start of src-graph-subgraph-main-SubgraphExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license>'
   id_60:
-    name: src-graph-group-groupers-NodeGrouper-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final
+    name: src-graph-group-groupers-NodeGrouper-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final
     needs:
-    - id_30
-    - id_43
-    - id_23
-    - id_91
-    - id_13
-    - id_12
     - id_10
-    - id_55
+    - id_91
     - id_16
+    - id_55
+    - id_30
+    - id_12
     - id_58
-    - id_90
     - id_15
+    - id_13
+    - id_90
+    - id_23
+    - id_43
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
       task-id: id_60
-      task-name: src-graph-group-groupers-NodeGrouper-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final
+      task-name: src-graph-group-groupers-NodeGrouper-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final
   id_61:
-    name: src-graph-subgraph-extractor-LinkExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword
+    name: src-graph-subgraph-extractor-LinkExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license
     needs:
+    - id_29
+    - id_28
     - id_27
     - id_26
-    - id_29
     - id_25
-    - id_28
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
       task-id: id_61
-      task-name: src-graph-subgraph-extractor-LinkExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword
+      task-name: src-graph-subgraph-extractor-LinkExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license
   id_62:
-    name: src-graph-subgraph-extractor-NodeExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account
+    name: src-graph-subgraph-extractor-NodeExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer
     needs:
+    - id_29
+    - id_28
     - id_27
     - id_26
-    - id_29
     - id_25
-    - id_28
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
       task-id: id_62
-      task-name: src-graph-subgraph-extractor-NodeExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account
+      task-name: src-graph-subgraph-extractor-NodeExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer
   id_63:
     name: src-graph-validate-FromLinkIDValidator-in-author_has_email-author
     needs:
@@ -628,8 +647,8 @@ jobs:
   id_65:
     name: src-graph-validate-FromLinkIDValidator-in-has_author-package
     needs:
-    - id_17
     - id_55
+    - id_17
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -638,8 +657,8 @@ jobs:
   id_66:
     name: src-graph-validate-FromLinkIDValidator-in-has_keyword-package
     needs:
-    - id_55
     - id_18
+    - id_55
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -658,8 +677,8 @@ jobs:
   id_68:
     name: src-graph-validate-FromLinkIDValidator-in-has_maintainer-package
     needs:
-    - id_20
     - id_55
+    - id_20
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -676,43 +695,17 @@ jobs:
       task-id: id_69
       task-name: src-graph-validate-FromLinkIDValidator-in-has_requirement-package
   id_7:
-    name: <bound method ETLGroup._end of src-graph-subgraph-main-SubgraphExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword>
-    needs:
-    - id_19
-    - id_11
-    - id_20
-    - id_55
-    - id_57
-    - id_92
-    - id_17
-    - id_10
-    - id_44
-    - id_18
-    - id_15
-    - id_30
-    - id_43
-    - id_23
-    - id_56
-    - id_12
-    - id_22
-    - id_16
-    - id_58
-    - id_54
-    - id_91
-    - id_13
-    - id_14
-    - id_21
-    - id_90
-    secrets: inherit
-    uses: ./.github/workflows/job.yml
-    with:
-      task-id: id_7
-      task-name: <bound method ETLGroup._end of src-graph-subgraph-main-SubgraphExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword>
+    name: <bound method ETL.start of src-graph-subgraph-validate-Validator-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license>
+    needs: []
+    runs-on: ubuntu-latest
+    steps:
+    - name: start
+      run: echo '<bound method ETL.start of src-graph-subgraph-validate-Validator-in-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license>'
   id_70:
     name: src-graph-validate-FromLinkIDValidator-in-has_url-package
     needs:
-    - id_55
     - id_22
+    - id_55
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -721,8 +714,8 @@ jobs:
   id_71:
     name: src-graph-validate-FromLinkIDValidator-in-maintainer_has_email-maintainer
     needs:
-    - id_44
     - id_43
+    - id_44
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -731,8 +724,8 @@ jobs:
   id_72:
     name: src-graph-validate-FromLinkIDValidator-in-owned_by-github_repo
     needs:
-    - id_16
     - id_54
+    - id_16
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -741,8 +734,8 @@ jobs:
   id_73:
     name: src-graph-validate-FromLinkIDValidator-in-released_by-package
     needs:
-    - id_55
     - id_56
+    - id_55
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -751,8 +744,8 @@ jobs:
   id_74:
     name: src-graph-validate-FromLinkIDValidator-in-released_from-package
     needs:
-    - id_55
     - id_57
+    - id_55
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -761,8 +754,8 @@ jobs:
   id_75:
     name: src-graph-validate-FromLinkIDValidator-in-url_hosted_by-url
     needs:
-    - id_90
     - id_92
+    - id_90
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -781,8 +774,8 @@ jobs:
   id_77:
     name: src-graph-validate-ToLinkIDValidator-in-email_hosted_by-email_domain
     needs:
-    - id_14
     - id_13
+    - id_14
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -791,8 +784,8 @@ jobs:
   id_78:
     name: src-graph-validate-ToLinkIDValidator-in-has_author-author
     needs:
-    - id_17
     - id_10
+    - id_17
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -809,13 +802,12 @@ jobs:
       task-id: id_79
       task-name: src-graph-validate-ToLinkIDValidator-in-has_keyword-keyword
   id_8:
-    name: <bound method ETLGroup._end of src-graph-subgraph-validate-Validator-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword>
+    name: <bound method ETL.start of src-main-WholeGraphDataPlatform-in-latest-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>
     needs: []
-    secrets: inherit
-    uses: ./.github/workflows/job.yml
-    with:
-      task-id: id_8
-      task-name: <bound method ETLGroup._end of src-graph-subgraph-validate-Validator-in-maintainer-license-keyword-email_domain-url_domain-email-author-package-github_repo-requirement-url-github_account-has_license-owned_by-author_has_email-released_by-email_hosted_by-has_maintainer-has_url-url_hosted_by-released_from-has_author-maintainer_has_email-has_requirement-has_keyword>
+    runs-on: ubuntu-latest
+    steps:
+    - name: start
+      run: echo '<bound method ETL.start of src-main-WholeGraphDataPlatform-in-latest-out-node_package_final-node_person_final-node_domain_final-node_github_repo_final-node_license_final-node_email_final-node_github_account_final-node_url_final-node_keyword_final-link_has_email_final-link_has_requirement_final-link_email_hosted_by_final-link_owned_by_final-link_has_maintainer_final-link_url_hosted_by_final-link_has_keyword_final-link_released_by_final-link_released_from_final-link_has_author_final-link_has_url_final-link_has_license_final>'
   id_80:
     name: src-graph-validate-ToLinkIDValidator-in-has_license-license
     needs:
@@ -829,8 +821,8 @@ jobs:
   id_81:
     name: src-graph-validate-ToLinkIDValidator-in-has_maintainer-maintainer
     needs:
-    - id_20
     - id_43
+    - id_20
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -839,8 +831,8 @@ jobs:
   id_82:
     name: src-graph-validate-ToLinkIDValidator-in-has_requirement-requirement
     needs:
-    - id_58
     - id_21
+    - id_58
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -849,8 +841,8 @@ jobs:
   id_83:
     name: src-graph-validate-ToLinkIDValidator-in-has_url-url
     needs:
-    - id_90
     - id_22
+    - id_90
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -889,8 +881,8 @@ jobs:
   id_87:
     name: src-graph-validate-ToLinkIDValidator-in-released_from-github_repo
     needs:
-    - id_16
     - id_57
+    - id_16
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
@@ -916,40 +908,44 @@ jobs:
       task-id: id_89
       task-name: src-tabularize-LatestTabularize-in-latest-out-latest_package-latest_requirement-latest_url-latest_keyword-latest_email
   id_9:
-    name: <bound method ETLGroup._end of src-main-WholeGraphDataPlatform-in-latest-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>
+    name: <bound method SubgraphExtractor.end of src-graph-subgraph-main-SubgraphExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license>
     needs:
-    - id_53
-    - id_33
-    - id_40
-    - id_35
-    - id_31
-    - id_37
-    - id_49
-    - id_32
-    - id_52
-    - id_39
-    - id_45
-    - id_51
-    - id_41
-    - id_34
-    - id_36
-    - id_38
-    - id_47
-    - id_42
-    - id_48
-    - id_50
-    - id_46
+    - id_16
+    - id_55
+    - id_30
+    - id_58
+    - id_57
+    - id_43
+    - id_44
+    - id_13
+    - id_18
+    - id_54
+    - id_14
+    - id_12
+    - id_15
+    - id_20
+    - id_90
+    - id_17
+    - id_23
+    - id_10
+    - id_91
+    - id_21
+    - id_92
+    - id_11
+    - id_56
+    - id_22
+    - id_19
     secrets: inherit
     uses: ./.github/workflows/job.yml
     with:
       task-id: id_9
-      task-name: <bound method ETLGroup._end of src-main-WholeGraphDataPlatform-in-latest-out-node_package_final-node_person_final-node_domain_final-node_license_final-node_keyword_final-node_email_final-node_github_repo_final-node_url_final-node_github_account_final-link_has_email_final-link_has_license_final-link_owned_by_final-link_released_by_final-link_email_hosted_by_final-link_has_maintainer_final-link_has_url_final-link_url_hosted_by_final-link_released_from_final-link_has_author_final-link_has_requirement_final-link_has_keyword_final>
+      task-name: <bound method SubgraphExtractor.end of src-graph-subgraph-main-SubgraphExtractor-in-latest_package-latest_requirement-latest_url-latest_keyword-latest_email-out-author-url_domain-github_repo-package-license-email-requirement-github_account-email_domain-url-keyword-maintainer-has_requirement-email_hosted_by-maintainer_has_email-owned_by-has_maintainer-url_hosted_by-author_has_email-has_keyword-released_by-released_from-has_author-has_url-has_license>
   id_90:
     name: url
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: url
@@ -957,9 +953,9 @@ jobs:
   id_91:
     name: url_domain
     needs:
-    - id_3
     - id_62
-    - id_0
+    - id_7
+    - id_4
     runs-on: ubuntu-latest
     steps:
     - name: url_domain
@@ -967,9 +963,9 @@ jobs:
   id_92:
     name: url_hosted_by
     needs:
+    - id_4
+    - id_7
     - id_61
-    - id_0
-    - id_3
     runs-on: ubuntu-latest
     steps:
     - name: url_hosted_by
